@@ -4,5 +4,6 @@ def inputs():
     P_upstream =  5.137E6 # [Pa] Vapor pressure of nitrous at 70F. I DONT LIKE THIS, SHOULD SEE WHAT HYBRID MATLAB CODE USES SINCE WE'LL BE ABOVE 70F AT COMPETITION
     P_downstream = 2.413E6 #[pP] (from MATLAB Hybrid Motor Design Tool) (our combustion chamber pressure, 350 psi)
     steps = 1000 #steps in the iterative integration process, to be kept common in each file to be used
-    Fluid = 'N2O'
-    return Cd,D_2, P_upstream, P_downstream, steps, Fluid
+    Fluid = 'N2O'# to be put into coolprop, must be entered like this
+    Pressure_Drop= ?????
+    return Cd,D_2, P_upstream, P_downstream, steps, Fluid, Pressure_Drop
