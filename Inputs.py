@@ -10,4 +10,5 @@ def inputs():
     Hole_Ring_1_Radius = 0.1 #[m] arbitrary
     Hole_Ring_2_Radius = 0.2 #[m] arbitrary
     Hole_Ring_3_Radius = 0.3 #[m] arbitrary
-    return Cd,D_2, P_upstream, P_downstream, steps, Fluid, Pressure_Drop, Hole_Ring_1_Radius, Hole_Ring_2_Radius, Hole_Ring_3_Radius
+    Spacing_Btwn_Each_Hole = 0.1 #[m] arbitrary
+    return Cd,D_2, P_upstream, P_downstream, steps, Fluid, Pressure_Drop, Hole_Ring_1_Radius, Hole_Ring_2_Radius, Hole_Ring_3_Radius, Spacing_Btwn_Each_Hole
