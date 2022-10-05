@@ -15,7 +15,7 @@ The Dyer model is the best model we currently have to model mass flow rate of ni
 
 All code is in python, most notably using cool prop, a package that gives thermodynamic properties of substances. 
 ***anyone who wants to use the code, do so on your own laptop, as you need packages you can't get on python on remote desktop. 
-I used PyCharm, then set my python interpretter as just the filepath being the location of python in my computer**********
+I used PyCharm, then set my python interpretter as just the filepath being the location of python in my computer, then download the packages called "coolprop", "numpy", and "matplotlib"**********
 
 
 DESIGN FACTORS:
@@ -36,4 +36,5 @@ We will use the following information about nitrous oxide, and our combustion ch
 
 **************The ultimate output we want from this script, the number of holes, determined by average flow rate (of oxidizer), and the targete mass flow rate, 
 is given in the output of the Dyer model script******************************
+**********The most relevent files to use are Dyer_model (contains the output we want), and function files, containing functions we want: SPI4Dyer_Model, SimpleHEM, SPI_model, HEM*************************** 
 	
