@@ -17,11 +17,11 @@ The Dyer model is the best model we currently have to model mass flow rate of ni
 main -->calls inputs to get inputs of hole diameter and Cd, and some pressure values
      -->calls dyer model, using inputs
          -->calls SPI4Dyer_Model, SimpleHEM, SPI_model, HEM
--->output we most care about: the number of holes needed for our given inputs
+-->output we most care about: the number of holes needed for our given inputs, and then spacing needed for the injector holes
 ******************************************************************************************************************************
 Files called, and descriptions:
 1)main - calls files to get the number of holes we need for our given inputs
-2)INPUTS: contains Cd, P_upstream (P_vapor_N2O), P_downstream (combustion chamber), the systems pressure drop, Fluid, etc.
+2)INPUTS: contains Cd, P_upstream (P_vapor_N2O), P_downstream (combustion chamber), the systems pressure drop, Fluid, angle of certain rings of injector holes if need multiple rings, the distance from the exit hole to impingement point
 3)Dyer model: calls HEM and SPI to get output we want (hole numbers)
 4)HEM: homogenous equilibrium model
 5)SPI_model: single phase incompressible model
