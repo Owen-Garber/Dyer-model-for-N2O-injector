@@ -11,4 +11,8 @@ def inputs():
     Hole_Ring_2_Radius = 0.2 #[m] arbitrary
     Hole_Ring_3_Radius = 0.3 #[m] arbitrary
     Spacing_Btwn_Each_Hole = 0.1 #[m] arbitrary
+    Impingement_depth_from_bottom_of_oriface_plate= 0.2 # [m] arbitrary
+    angle_from_surface_hole_ring_1 = 45 #[degrees]
+    angle_from_surface_hole_ring_2 = 55 #[degrees]
+    angle_from_surface_hole_ring_3 = 65 #[degrees] MAYBE THESE CAN BE CALCUULATED TO GET RIGHT IMPINGEMENT POINT
     return Cd,D_2, P_upstream, P_downstream, steps, Fluid, Pressure_Drop, Hole_Ring_1_Radius, Hole_Ring_2_Radius, Hole_Ring_3_Radius, Spacing_Btwn_Each_Hole
