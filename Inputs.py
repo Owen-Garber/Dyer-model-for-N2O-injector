@@ -6,4 +6,8 @@ def inputs():
     steps = 1000 #steps in the iterative integration process, to be kept common in each file to be used
     Fluid = 'N2O'# to be put into coolprop, must be entered like this
     Pressure_Drop= ?????
-    return Cd,D_2, P_upstream, P_downstream, steps, Fluid, Pressure_Drop
+    Rings_of_Holes = 3 #arbitrary
+    Hole_Ring_1_Radius = 0.1 #[m] arbitrary
+    Hole_Ring_2_Radius = 0.2 #[m] arbitrary
+    Hole_Ring_3_Radius = 0.2 #[m] arbitrary
+    return Cd,D_2, P_upstream, P_downstream, steps, Fluid, Pressure_Drop, Hole_Ring_1_Radius, Hole_Ring_2_Radius, Hole_Ring_3_Radius
