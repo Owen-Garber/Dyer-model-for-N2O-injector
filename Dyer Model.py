@@ -120,3 +120,4 @@ print ( "FlowTracker is [kg/s] : ",FlowTracker )
 print ("AverageFlowRate is [kg/s] : ", AverageFlowRate )
 print ("*****Needed Number of Holes of Given Diameter: ", D_2, " [m]  to achieve target oxidizer mass flow rate is: ", M_dot_avg_target/AverageFlowRate, "holes*****")
 
+########################HAVE IT RETURN THE NUMBER OF HOLES, hole_number####################################
