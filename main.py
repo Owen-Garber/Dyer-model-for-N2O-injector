@@ -3,6 +3,7 @@ print("********************hole geometry************************")
 
 hole_number=12 #from dyer model
 D_2=.00157 #[m] from RPE
+countersink_max_diameter=1.2*D_2 #from nasa injector reference pg 38. assumed to be half as effective as a rounded entrance radius, 1.2 maximizes Cd.
 print(hole_number, "holes needed of size", D_2, "[m] with a countersink at the entrance")
 outer_diameter_of_orifice_plate=0.0381 #[m] = 1.5 [in]
 diameter_hole_ring_1=outer_diameter_of_orifice_plate/3
