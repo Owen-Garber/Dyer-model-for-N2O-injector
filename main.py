@@ -18,7 +18,7 @@ print("the number of holes in the most inner ring of holes will be ", number_hol
 print("thus, there will be two times as many holes in the 2nd most inner ring of holes to keep enough spacing")
 number_holes_ring_2=8
 print("the number of holes in the most inner ring of holes will be ", number_holes_ring_2)
-angle_first_ring = 45 #degrees, not super arbitrary, difficult to find ideal number
+angle_first_ring = 60 #degrees, from NASA injector reference.pdf, 
 print("the angle of the first hole ring will be ", angle_first_ring, "degrees from the surface of the orifice plate")
 impingement_point_y_coord=(diameter_hole_ring_1/2)*math.tan(angle_first_ring)
 print("the holes will impinge at ", impingement_point_y_coord, "[m] from the **top** of the orifice plate")
