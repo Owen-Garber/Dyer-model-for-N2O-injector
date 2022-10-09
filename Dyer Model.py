@@ -36,7 +36,7 @@ steps =1000 # Number of steps in each iteration of mHEM & mSPI
 P1 = np.linspace(5.585E6 ,3.792E6 ,10) # [Pa]linear upstream pressure drop from 810 psi to 550 psi
 # (as predicted by our matlab hybrid motor design tool)
 Operating_P2 =2.413E6 # ~~operating pressure in burn chamber ( assumed constant )
-M_dot_avg_target = 0.7552313 #[kg/s] found by looking at mdot ox graph of matlab code and averaging max and min
+M_dot_avg_target = 0.733050629 #[kg/s] found by looking at mdot ox graph of matlab code and averaging max and min
 #-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 FlowTracker = np.zeros(len(P1)) # tracks of flowrate at P2= Operating P2 for different P1 iterations
