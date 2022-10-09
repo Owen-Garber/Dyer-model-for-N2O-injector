@@ -5,10 +5,10 @@ Dyer Model
 
  Made for use with N2O or CO2
 
- This basic version is meant to be used for saturated liquid
-upstream , no supercharge .
+ This basic version is meant to be used for saturated liquid (about to vaporize, always true in our case)
+upstream , no supercharge (no external pressurization) .
  To get supercharged , some changes would have to be made to SPI and
-HEM models , but this is not currently relevant for Propulse
+HEM models , but this is not currently relevant for our hybrid
 
  Note that P_2 ranges from 1/5.2 bar . this is because the CoolProp
 fails in HEM model for very small values of P2.
@@ -18,8 +18,6 @@ details .
  Also note that P_2 ends at P_1 - 1 instead of P_1 . This is because
 we otherwise divide by 0 in the calculation of k.
 
-~~ means OWEN EDITED
-** Needs to be edited still maybe
  @author : Jonas
  """
 import numpy as np
@@ -30,14 +28,15 @@ from SimpleHEM import simpleHEM
 from SPI_Model import SPI_Model
 from HEM import HEM
 
-# Example Input :
+# MSU Rocketry inputs :
 Cd =0.76 # ~~Discharge Coefficient from RPE
 D_2 =.00157 # ~~Injector Orfice Diameter to be designed around (la( should be 1 -2 mm) [m]
 Fluid ='N2O'# ~~Fluid - both N2O and CO2 can be used .
 steps =1000 # Number of steps in each iteration of mHEM & mSPI
-P1 = np.linspace(6E6 ,2.416E6 ,10) # ~~linear upstream pressure drop from 60 bar to 40 bar [Pa] **Not sure what the 10 is ** not sure if the 2.416e6 is right, that is 350PSI
+P1 = np.linspace(5.585E6 ,3.792E6 ,10) # [Pa]linear upstream pressure drop from 810 psi to 550 psi
+# (as predicted by our matlab hybrid motor design tool)
 Operating_P2 =2.413E6 # ~~operating pressure in burn chamber ( assumed constant )
-M_dot_avg_target = 2 #[kg/s]
+M_dot_avg_target = 0.7552313 #[kg/s] found by looking at mdot ox graph of matlab code and averaging max and min
 #-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 FlowTracker = np.zeros(len(P1)) # tracks of flowrate at P2= Operating P2 for different P1 iterations
@@ -49,27 +48,26 @@ for j in range (len( P1 ) ) :
  mSPI = SPI4Dyer_Model ( Fluid , P_1 , Cd , D_2 , steps ) #~~ tabbed it
 #Get mHEM
  mHEM = simpleHEM ( Fluid , P_1 , Cd , D_2 , steps ) #~~ tabbed it
-#An Investigation into Hybrid Rocket Injectors
 # Initialize parameters
- P_v = P_1 # saturated case #~~ tabbed it
- P_2 = np . linspace (100000 , P_1 -1 , steps ) #~~ tabbed it # matches what we used in HEM
+ P_v = P_1 # p_v is vapor pressure. In saturated case, P_v=p_1. (valid, always ready to vaporize in a self pressurizing tank)
+ P_2 = np.linspace(1E5 , P_1 -1 , steps ) # matches what we used in HEM. very low values of p_2 cause issues with thermodynamics. use 1E5 to avoid.
 
  if Fluid == 'N2O':# See introduction text above for explaination
-  DeltaP = np . linspace ( P_1 -1E5 ,1 , steps ) #~~ tabbed it
-  P_2 = np . linspace (1E5 , P_1 -1 , steps )#~~ tabbed it
+  DeltaP = np.linspace(P_1-1E5,1,steps)
+  P_2 = np . linspace (1E5 ,P_1-1 ,steps )
  else :
-  DeltaP = np . linspace ( P_1 -5.2E5 ,1 , steps )#~~ tabbed it
-  P_2 = np . linspace (5.2E5 , P_1 -1 , steps )#~~ tabbed it
- mDyer = np . zeros ( steps )#~~ tabbed it
- k =0#~~ tabbed it
- mDyerChoked = np . zeros ( steps )#~~ tabbed it
+  DeltaP = np . linspace ( P_1 -5.2E5 ,1, steps )
+  P_2 = np . linspace (5.2E5 , P_1 -1 , steps )
+ mDyer = np . zeros ( steps )
+
+ mDyerChoked = np.zeros ( steps )
 
  #for loop for Dyer model
- for i in range ( steps ) :
-  k = np . sqrt (( P_1 - P_2 [ i ]) /( P_v - P_2 [ i ]) ) ##~~ tabbed it, In saturated case this will always be 1...
+ for i in range (steps) :
+  k=np.sqrt((P_1-P_2[ i ])/(P_v-P_2[i]))#In saturated case this will always be 1, since p_v=p_1 always in our case
   mDyer [ i ]=((( k * mSPI [ i ]) /(1+ k ) ) +( mHEM [ i ]/(1+ k ) ) )
 
- criticalIndex = np . where ( mDyer == np .max( mDyer ) ) # index where critical value occurs .
+ criticalIndex = np.where( mDyer == np.max( mDyer )) # index where critical value occurs .
 
  ChokedValue [j]= np.max(mDyer)
  #for loop for choked flow
@@ -102,8 +100,7 @@ print (np.max( mDyer ))
  # plt . legend ()
  # plt . ticklabel_format ( axis ="x", style ="sci", scilimits =(0 ,0) )
  # plt . show ()
- FlowTracker [ j ]= np . interp ( Operating_P2 , P_2 , mDyerChoked )
-
+ FlowTracker[j]= np.interp( Operating_P2 , P_2 , mDyerChoked )
 
 # plt.plot(P1,FlowTracker,label='P_2=%.2f [Mpa]'%(Operating_P2/(1E6)))
 # plt.plot(P1,ChokedValue,label='Choked, P_2=%.2 f [Mpa]'%(Operating_P2/(1E6)))
@@ -114,10 +111,9 @@ print (np.max( mDyer ))
 # plt . legend ()
 # plt.ticklabel_format(axis ="x",style ="sci", scilimits =(0,0))
 # plt . show ()
-AverageFlowRate = np . average ( FlowTracker )
+AverageFlowRate = np.average ( FlowTracker )
+Hole_number=round(M_dot_avg_target/AverageFlowRate)
 print ( "chocked flow value is [kg/s] : ",ChokedValue )
 print ( "FlowTracker is [kg/s] : ",FlowTracker )
 print ("AverageFlowRate is [kg/s] : ", AverageFlowRate )
-print ("*****Needed Number of Holes of Given Diameter: ", D_2, " [m]  to achieve target oxidizer mass flow rate is: ", M_dot_avg_target/AverageFlowRate, "holes*****")
-
-########################HAVE IT RETURN THE NUMBER OF HOLES, hole_number####################################
+print ("**Needed Number of Holes of Given Diameter:",D_2, "[m]  to achieve target oxidizer mass flow rate of:", M_dot_avg_target, "[kg/s] is: ", Hole_number, "holes*****")
