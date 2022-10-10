@@ -6,6 +6,8 @@ D_2=.00157 #[m] from RPE
 thickness_of_orifice_plate=.00635 #[m] = .25 inches
 countersink_max_diameter=1.2*D_2 #from nasa injector reference pg 38. assumed to be half as effective as a rounded entrance radius, 1.2 maximizes Cd.
 print(hole_number, "holes needed of size", D_2, "[m] with a countersink at the entrance")
+Countersink_angle = 90
+print("the angle of the countersink will be", Countersink_angle, "degrees. So each side of the bore hole will be 45 degrees from perpendicular to plate surface")
 outer_diameter_of_orifice_plate=0.0381 #[m] = 1.5 [in]
 diameter_hole_ring_1=outer_diameter_of_orifice_plate/3
 print("the diameter of the most inner ring of holes will be ", diameter_hole_ring_1, "[m]")
