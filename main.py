@@ -19,9 +19,11 @@ print("the number of holes in the most inner ring of holes will be ", number_hol
 print("thus, there will be two times as many holes in the 2nd most inner ring of holes to keep enough spacing")
 number_holes_ring_2=8
 print("the number of holes in the most inner ring of holes will be ", number_holes_ring_2)
-angle_first_ring = 60 #degrees, from NASA injector reference.pdf, 
+angle_first_ring = 60 #degrees, produces ideal characteristics, from https://ntrs.nasa.gov/citations/19760023196, 
 print("the angle of the first hole ring will be ", angle_first_ring, "degrees from the surface of the orifice plate")
-impingement_point_y_coord=(diameter_hole_ring_1/2)*math.tan(angle_first_ring)
+impingement_point_y_coord=(diameter_hole_ring_1/2)*math.tan(angle_first_ring) #want to be around 5-7 * D_2
+ideal_impingement_point_y_coord = 6*D_2*math.sin(math.radians(angle_first_ring)) # from https://ntrs.nasa.gov/citations/19760023196 pg 29. 
+print("ideal impingement point is ", ideal_impingement_point_y_coord, "below the bottom of the orifice plate")
 print("the holes will impinge at ", impingement_point_y_coord, "[m] from the **top** of the orifice plate")
 angle_second_ring = math.atan(impingement_point_y_coord/(diameter_hole_ring_2/2)) #radians, just using geometry
 angle_second_ring=math.degrees(angle_second_ring) #converted to degrees
@@ -30,8 +32,8 @@ print("so that the two rings of holes impinge at the same point below the orific
 
 
 print("********************diffuser geometry************************")
-max_angle_diffuser=5 #degrees, arbitrary currently
-ID_inlet_injector= .00635 #[m]
+max_angle_diffuser=10 #degrees, from page 48 of liquid rocket engine injectors by NASA. NASA says no greater than 10 degrees, being safe. https://ntrs.nasa.gov/citations/19760023196
+ID_inlet_injector= .00635 #[m] from CAD
 height_of_diffuser=(outer_diameter_of_orifice_plate-ID_inlet_injector)/(math.degrees(math.tan(max_angle_diffuser)))
 print("the required height from bottom of inlet to top of orifice plate at ", max_angle_diffuser, "degrees from vertical is ", height_of_diffuser, "[m]")
 print(outer_diameter_of_orifice_plate-ID_inlet_injector)
